@@ -1,0 +1,26 @@
+{
+  "context-menu": {
+    "atom-text-editor": [
+      {
+        "label": "Toggle autocomplete-ansible",
+        "command": "autocomplete-ansible:toggle"
+      }
+    ]
+  },
+  "menu": [
+    {
+      "label": "Packages",
+      "submenu": [
+        {
+          "label": "autocomplete-ansible",
+          "submenu": [
+            {
+              "label": "Toggle",
+              "command": "autocomplete-ansible:toggle"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

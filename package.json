@@ -1,0 +1,27 @@
+{
+  "name": "autocomplete-ansible",
+  "main": "./lib/main",
+  "version": "0.0.0",
+  "description": "An autocomplete+ provider for Ansible Playbook",
+  "keywords": [],
+  "repository": "https://github.com/h-hirokawa/atom-autocomplete-ansible",
+  "license": "MIT",
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "providedServices": {
+    "autocomplete.provider": {
+      "versions": {
+        "2.0.0": "getProvider"
+      }
+    }
+  },
+  "dependencies": {
+    "fuzzaldrin": "^2.1"
+  },
+  "devDependencies": {
+    "eslint": "^2.11.1",
+    "eslint-config-airbnb": "^9.0.1",
+    "eslint-plugin-react": "^5.1.1"
+  }
+}
