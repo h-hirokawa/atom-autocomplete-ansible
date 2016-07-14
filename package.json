@@ -20,6 +20,7 @@
     "fuzzaldrin": "^2.1"
   },
   "devDependencies": {
+    "babel-eslint": "^6.1.0",
     "eslint": "^2.11.1",
     "eslint-config-airbnb": "^9.0.1",
     "eslint-plugin-react": "^5.1.1"
