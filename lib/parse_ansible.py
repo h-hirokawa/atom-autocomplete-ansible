@@ -20,7 +20,7 @@ def main():
     for path in module_paths:
         doc_cli.find_modules(path)
 
-    result = {'modules': [], 'directives': {}}
+    result = {'modules': [], 'directives': {}, 'lookup_plugins':[]}
 
     for module in sorted(set(doc_cli.module_list)):
         if module in module_docs.BLACKLIST_MODULES:
@@ -51,10 +51,11 @@ def main():
             if attr == 'action':
                 local_action = result['directives'].setdefault('local_action', [])
                 local_action.append(name)
+    result['directives']['with_'] = ['Task']
 
     for lookup in lookup_loader.all():
         name = os.path.splitext(os.path.basename(lookup._original_path))[0]
-        result['directives']['with_' + name] = ['Task']
+        result['lookup_plugins'].append(name)
 
     print(json.dumps(result))
 
