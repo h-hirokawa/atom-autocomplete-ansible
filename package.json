@@ -17,6 +17,7 @@
     }
   },
   "dependencies": {
+    "escape-string-regexp": "^1.0.5",
     "fuzzaldrin": "^2.1"
   },
   "devDependencies": {
