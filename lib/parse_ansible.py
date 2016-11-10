@@ -11,6 +11,10 @@ from ansible.playbook.task import  Task
 from ansible.plugins import lookup_loader, module_loader
 from ansible.utils import module_docs
 
+from ansible.utils.display import Display
+display = Display()
+
+
 def main():
     doc_cli = DocCLI([])
     module_paths = module_loader._get_paths()
