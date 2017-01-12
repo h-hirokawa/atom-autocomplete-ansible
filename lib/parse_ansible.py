@@ -4,10 +4,10 @@ import json
 import os
 
 from ansible.cli.doc import DocCLI
-from ansible.playbook import  Play
-from ansible.playbook.block import  Block
-from ansible.playbook.role import  Role
-from ansible.playbook.task import  Task
+from ansible.playbook import Play
+from ansible.playbook.block import Block
+from ansible.playbook.role import Role
+from ansible.playbook.task import Task
 from ansible.plugins import lookup_loader, module_loader
 from ansible.utils import module_docs
 
@@ -24,7 +24,7 @@ def main():
     for path in module_paths:
         doc_cli.find_modules(path)
 
-    result = {'modules': [], 'directives': {}, 'lookup_plugins':[]}
+    result = {'modules': [], 'directives': {}, 'lookup_plugins': []}
 
     for module in sorted(set(doc_cli.module_list)):
         if module in module_docs.BLACKLIST_MODULES:
@@ -37,7 +37,7 @@ def main():
         if os.path.isdir(filename):
             continue
         try:
-            doc, plainexamples, returndocs = module_docs.get_docstring(filename)
+            doc, _, _ = module_docs.get_docstring(filename)
             filtered_doc = {key: doc.get(key, None) for key in module_keys}
             result['modules'].append(filtered_doc)
         except:
@@ -53,7 +53,8 @@ def main():
             direct_target = result['directives'].setdefault(attr, [])
             direct_target.append(name)
             if attr == 'action':
-                local_action = result['directives'].setdefault('local_action', [])
+                local_action = result['directives'].setdefault(
+                    'local_action', [])
                 local_action.append(name)
     result['directives']['with_'] = ['Task']
 
