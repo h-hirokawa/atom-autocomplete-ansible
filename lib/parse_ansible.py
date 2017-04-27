@@ -37,7 +37,7 @@ def main():
         if os.path.isdir(filename):
             continue
         try:
-            doc, _, _ = module_docs.get_docstring(filename)
+            doc = module_docs.get_docstring(filename)[0]
             filtered_doc = {key: doc.get(key, None) for key in module_keys}
             result['modules'].append(filtered_doc)
         except:
