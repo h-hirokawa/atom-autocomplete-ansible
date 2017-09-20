@@ -8,9 +8,8 @@ from ansible.playbook import Play
 from ansible.playbook.block import Block
 from ansible.playbook.role import Role
 from ansible.playbook.task import Task
-from ansible.plugins import lookup_loader, module_loader
-from ansible.utils import module_docs
-
+from ansible.plugins.loader import lookup_loader, module_loader
+from ansible.utils import plugin_docs
 from ansible.utils.display import Display
 display = Display()
 
@@ -22,12 +21,12 @@ def main():
     module_keys = ('module', 'short_description', 'options', 'deprecated')
 
     for path in module_paths:
-        doc_cli.find_modules(path)
+        doc_cli.find_plugins(path, 'module')
 
     result = {'modules': [], 'directives': {}, 'lookup_plugins': []}
 
-    for module in sorted(set(doc_cli.module_list)):
-        if module in module_docs.BLACKLIST_MODULES:
+    for module in sorted(set(doc_cli.plugin_list)):
+        if module in plugin_docs.BLACKLIST['MODULE']:
             continue
         filename = module_loader.find_plugin(module, mod_type='.py')
         if filename is None:
@@ -37,7 +36,7 @@ def main():
         if os.path.isdir(filename):
             continue
         try:
-            doc = module_docs.get_docstring(filename)[0]
+            doc = plugin_docs.get_docstring(filename)[0]
             filtered_doc = {key: doc.get(key, None) for key in module_keys}
             result['modules'].append(filtered_doc)
         except:
