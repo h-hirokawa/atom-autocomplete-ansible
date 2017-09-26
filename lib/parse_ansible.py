@@ -8,25 +8,40 @@ from ansible.playbook import Play
 from ansible.playbook.block import Block
 from ansible.playbook.role import Role
 from ansible.playbook.task import Task
-from ansible.plugins.loader import lookup_loader, module_loader
-from ansible.utils import plugin_docs
 from ansible.utils.display import Display
+
+try:
+    from ansible.plugins.loader import lookup_loader, module_loader
+    from ansible.utils import plugin_docs
+    use_old_loader = False
+    BLACKLIST_MODULES = plugin_docs.BLACKLIST['MODULE']
+except ImportError:
+    from ansible.plugins import lookup_loader, module_loader
+    from ansible.utils import module_docs as plugin_docs
+    use_old_loader = True
+    BLACKLIST_MODULES = plugin_docs.BLACKLIST_MODULES
+
 display = Display()
+doc_cli = DocCLI([])
+
+
+def get_module_list():
+    module_paths = module_loader._get_paths()
+    for path in module_paths:
+        if use_old_loader:
+            doc_cli.find_modules(path)
+        else:
+            doc_cli.find_plugins(path, 'module')
+    module_list = doc_cli.module_list if use_old_loader else doc_cli.plugin_list
+    return sorted(set(module_list))
 
 
 def main():
-    doc_cli = DocCLI([])
-    module_paths = module_loader._get_paths()
-
     module_keys = ('module', 'short_description', 'options', 'deprecated')
-
-    for path in module_paths:
-        doc_cli.find_plugins(path, 'module')
-
     result = {'modules': [], 'directives': {}, 'lookup_plugins': []}
 
-    for module in sorted(set(doc_cli.plugin_list)):
-        if module in plugin_docs.BLACKLIST['MODULE']:
+    for module in get_module_list():
+        if module in BLACKLIST_MODULES:
             continue
         filename = module_loader.find_plugin(module, mod_type='.py')
         if filename is None:
