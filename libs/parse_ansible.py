@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+from __future__ import print_function
+
+import __main__
 import json
 import os
 
@@ -21,7 +24,7 @@ except ImportError:
     use_old_loader = True
     BLACKLIST_MODULES = plugin_docs.BLACKLIST_MODULES
 
-display = Display()
+__main__.display = Display()
 doc_cli = DocCLI([])
 
 

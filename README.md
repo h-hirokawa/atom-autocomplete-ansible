@@ -1,4 +1,4 @@
-# autocomplete-ansible package
+# autocomplete-ansible package [![Build Status](https://travis-ci.org/h-hirokawa/atom-autocomplete-ansible.svg?branch=master)](https://travis-ci.org/h-hirokawa/atom-autocomplete-ansible)
 
 An [autocomplete+](https://github.com/atom/autocomplete-plus) provider for Ansible Playbook.
 
@@ -11,7 +11,9 @@ An [autocomplete+](https://github.com/atom/autocomplete-plus) provider for Ansib
 ![demo](https://cloud.githubusercontent.com/assets/1086022/16838450/1c3d368a-4a04-11e6-9775-64de7bf19dc2.gif)
 
 ## Requirements
-* ansible >= 2.0
+* Ansible >= 2.2 and Python 2.7
+or
+* Ansible >= 2.4 and Python >= 3.5
 
 ## ToDo
 * Autocompletion of module arguments when the cursor is in module block.
