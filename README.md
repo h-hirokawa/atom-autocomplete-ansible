@@ -1,4 +1,4 @@
-# autocomplete-ansible package
+# autocomplete-ansible package [![Build Status](https://travis-ci.org/h-hirokawa/atom-autocomplete-ansible.svg?branch=master)](https://travis-ci.org/h-hirokawa/atom-autocomplete-ansible)
 
 An [autocomplete+](https://github.com/atom/autocomplete-plus) provider for Ansible Playbook.
 
