@@ -1,6 +1,6 @@
 {
   "name": "autocomplete-ansible",
-  "main": "./lib/main",
+  "main": "./libs/main",
   "version": "0.1.15",
   "description": "An autocomplete+ provider for Ansible Playbook",
   "keywords": [],
