@@ -3,6 +3,7 @@
 import { exec } from 'child_process';
 import { format } from 'util';
 import { filter } from 'fuzzaldrin';
+import { join as pathJoin } from 'path';
 import escapeStringRegexp from 'escape-string-regexp';
 import interpretersLookup from './interpreters-lookup';
 import log from './log';
@@ -33,7 +34,8 @@ export default class Provider {
     if (self._loading) {return;}
     self._loading = true;
     const interpreter = interpretersLookup.getInterpreter();
-    exec(`"${interpreter}" "${__dirname}/parse_ansible.py"`, {maxBuffer: 5*1024*1024}, function (err, stdout) {
+    const script = pathJoin(__dirname, 'parse_ansible.py');
+    exec(`"${interpreter}" "${script}"`, {maxBuffer: 5*1024*1024}, function (err, stdout) {
       self._loading = false;
       if (err) {
         if (err.message.match(/No module named ['"]?ansible/)) {
