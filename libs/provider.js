@@ -33,7 +33,7 @@ export default class Provider {
     if (self._loading) {return;}
     self._loading = true;
     const interpreter = interpretersLookup.getInterpreter();
-    exec(`${interpreter} "${__dirname}/parse_ansible.py"`, {maxBuffer: 5*1024*1024}, function (err, stdout) {
+    exec(`"${interpreter}" "${__dirname}/parse_ansible.py"`, {maxBuffer: 5*1024*1024}, function (err, stdout) {
       self._loading = false;
       if (err) {
         if (err.message.match(/No module named ['"]?ansible/)) {
