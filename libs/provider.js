@@ -11,7 +11,8 @@ import log from './log';
 export default class Provider {
   constructor() {
     let self = this;
-    self.selectorList = ['.source.yaml', '.source.ansible'];
+    self.selectorList = [
+      '.source.yaml', '.source.ansible', '.source.ansible-advanced'];
     self.selector = self.selectorList.join(', ');
     self.disableForSelector = self.selectorList.map((s) => {
       return s + ' .comment';
