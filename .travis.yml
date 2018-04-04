@@ -14,8 +14,6 @@ matrix:
       env: ANSIBLE=2.2
     - python: "2.7"
       env: ANSIBLE=2.3
-  allow_failures:
-    - env: ANSIBLE=2.5
 install: pip install tox-travis
 script:
   - tox
