@@ -36,56 +36,70 @@ export default class Provider {
     self._loading = true;
     const interpreter = interpretersLookup.getInterpreter();
     const script = pathJoin(__dirname, 'parse_ansible.py');
-    exec(`"${interpreter}" "${script}"`, {maxBuffer: 5*1024*1024}, function (err, stdout) {
-      self._loading = false;
-      if (err) {
-        if (err.message.match(/No module named ['"]?ansible/)) {
-          window.atom.notifications.addWarning(
-            'autocomplete-ansible unable to import ansible.', {
-              detail: 'Install ansible using pip.',
-              dismissable: true
-            }
-          );
-        } else {
-          window.atom.notifications.addError(
-            'autocomplete-ansible traceback output:', {
-              detail: err.message,
-              dismissable: true
-            }
-          );
+    exec(`"${interpreter}" "${script}"`,
+      {env: {ANSIBLE_DEPRECATION_WARNINGS: 'False'}, maxBuffer: 5*1024*1024},
+      function (err, stdout) {
+        self._loading = false;
+        if (err) {
+          const no_ansible_match = err.message.match(
+            /No module named ['"]?ansible/),
+            miss_modules_match = err.message.match(
+              /ansible.errors.AnsibleError: .+ requires (.+)\./);
+          if (no_ansible_match) {
+            window.atom.notifications.addWarning(
+              'autocomplete-ansible unable to import ansible.', {
+                detail: 'Install ansible using pip.',
+                dismissable: true
+              }
+            );
+          } else if (miss_modules_match) {
+            window.atom.notifications.addWarning(
+              `autocomplete-ansible unable to import ${miss_modules_match[1]}.`, {
+                detail: `Install ${miss_modules_match[1]} with pip.`,
+                dismissable: true
+              }
+            );
+          } else {
+            window.atom.notifications.addError(
+              'autocomplete-ansible traceback output:', {
+                detail: err.message,
+                dismissable: true
+              }
+            );
+          }
+          throw err;
         }
-        throw err;
-      }
-      let ansibleData = JSON.parse(stdout);
-      self.modules = ansibleData.modules.map(function (elm) {
-        return {
-          text: elm.module,
-          type: 'function',
-          leftLabel: 'module',
-          rightLabel: elm.deprecated ? 'Deprecated' : null,
-          description: elm.short_description || '',
-          descriptionMoreURL: format('http://docs.ansible.com/ansible/%s_module.html', elm.module),
-          _options: elm.options
-        };
-      });
-      Object.keys(ansibleData.directives).forEach(function (key) {
-        self.directives.push({
-          text: key,
-          type: 'keyword',
-          leftLabel: 'directive',
-          description: 'directive for ' + ansibleData.directives[key].join(', ') + '.'
+        let ansibleData = JSON.parse(stdout);
+        self.modules = ansibleData.modules.map(function (elm) {
+          return {
+            text: elm.module,
+            type: 'function',
+            leftLabel: 'module',
+            rightLabel: elm.deprecated ? 'Deprecated' : null,
+            description: elm.short_description || '',
+            descriptionMoreURL: format('http://docs.ansible.com/ansible/%s_module.html', elm.module),
+            _options: elm.options
+          };
         });
-      });
-      self.loop_directives = ansibleData.lookup_plugins.map(function(elm) {
-        return {
-          text: 'with_' + elm,
-          type: 'keyword',
-          leftLabel: 'loop directive',
-          description: 'directive for loop'
-        };
-      });
-      log.debug('ansible has been loaded!');
-    });
+        Object.keys(ansibleData.directives).forEach(function (key) {
+          self.directives.push({
+            text: key,
+            type: 'keyword',
+            leftLabel: 'directive',
+            description: 'directive for ' + ansibleData.directives[key].join(', ') + '.'
+          });
+        });
+        self.loop_directives = ansibleData.lookup_plugins.map(function(elm) {
+          return {
+            text: 'with_' + elm,
+            type: 'keyword',
+            leftLabel: 'loop directive',
+            description: 'directive for loop'
+          };
+        });
+        log.debug('ansible has been loaded!');
+      }
+    );
   }
 
   getSuggestions(request) {

@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from __future__ import print_function
+from __future__ import print_function, unicode_literals
 
 import __main__
 import json
 import os
+import sys
 
 from ansible.cli.doc import DocCLI
 from ansible.playbook import Play
@@ -23,6 +24,13 @@ except ImportError:
     from ansible.utils import module_docs as plugin_docs
     use_old_loader = True
     BLACKLIST_MODULES = plugin_docs.BLACKLIST_MODULES
+
+try:
+    from ansible.plugins.loader import fragment_loader
+    USE_FRAGMENT_LOADER = True
+except ImportError:
+    fragment_loader = None
+    USE_FRAGMENT_LOADER = False
 
 __main__.display = Display()
 doc_cli = DocCLI([])
@@ -53,11 +61,13 @@ def main():
             continue
         if os.path.isdir(filename):
             continue
+        get_docstring_args = ((filename, fragment_loader)
+                              if USE_FRAGMENT_LOADER else (filename,))
         try:
-            doc = plugin_docs.get_docstring(filename)[0]
+            doc = plugin_docs.get_docstring(*get_docstring_args)[0]
             filtered_doc = {key: doc.get(key, None) for key in module_keys}
             result['modules'].append(filtered_doc)
-        except:
+        except Exception as e:
             pass
 
     for aclass in (Play, Role, Block, Task):

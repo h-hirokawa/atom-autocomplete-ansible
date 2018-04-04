@@ -3,7 +3,7 @@ import json
 from libs import parse_ansible
 
 
-def test_one_plus_one(capsys):
+def test_parse_ansible(capsys):
     parse_ansible.main()
     captured = capsys.readouterr()
     result = json.loads(captured.out)
