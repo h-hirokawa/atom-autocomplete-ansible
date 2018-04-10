@@ -48,14 +48,21 @@ export default class Provider {
           if (no_ansible_match) {
             window.atom.notifications.addWarning(
               'autocomplete-ansible unable to import ansible.', {
-                detail: 'Install ansible using pip.',
+                description: `You must install ansible with the following
+command and then reload the editor.
+
+\`\`\`
+${interpreter} -m pip install ansible
+\`\`\`
+`,
                 dismissable: true
               }
             );
           } else if (miss_modules_match) {
             window.atom.notifications.addWarning(
               `autocomplete-ansible unable to import ${miss_modules_match[1]}.`, {
-                detail: `Install ${miss_modules_match[1]} with pip.`,
+                description: `Install ${miss_modules_match[1]} with
+\`${interpreter} -m pip\`.`,
                 dismissable: true
               }
             );
