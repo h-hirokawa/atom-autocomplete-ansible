@@ -42,7 +42,7 @@ export default class Provider {
         self._loading = false;
         if (err) {
           const no_ansible_match = err.message.match(
-            /No module named ['"]?ansible/),
+            /No module named ['"]?ansible/);
           if (no_ansible_match) {
             window.atom.notifications.addWarning(
               'autocomplete-ansible unable to import ansible.', {
