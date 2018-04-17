@@ -15,8 +15,6 @@ An [autocomplete+](https://github.com/atom/autocomplete-plus) provider for Ansib
 or
 * Ansible >= 2.4 and Python >= 3.5
 
-:warning: With Ansible 2.5, you must also install [boto3](https://pypi.python.org/pypi/boto3) and [botocore](https://pypi.python.org/pypi/botocore) (see [#32](https://github.com/h-hirokawa/atom-autocomplete-ansible/issues/32)).
-
 ## ToDo
 * Autocompletion of module arguments when the cursor is in module block.
 * Autocompletion of variables/factors.
