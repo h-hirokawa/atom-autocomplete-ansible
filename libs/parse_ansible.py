@@ -85,8 +85,8 @@ def main():
                 local_action.append(name)
     result['directives']['with_'] = ['Task']
 
-    for lookup in lookup_loader.all():
-        name = os.path.splitext(os.path.basename(lookup._original_path))[0]
+    for lookup in lookup_loader.all(path_only=True):
+        name = os.path.splitext(os.path.basename(lookup))[0]
         result['lookup_plugins'].append(name)
 
     print(json.dumps(result))

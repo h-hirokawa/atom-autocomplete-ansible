@@ -43,8 +43,6 @@ export default class Provider {
         if (err) {
           const no_ansible_match = err.message.match(
             /No module named ['"]?ansible/),
-            miss_modules_match = err.message.match(
-              /ansible.errors.AnsibleError: .+ requires (.+)\./);
           if (no_ansible_match) {
             window.atom.notifications.addWarning(
               'autocomplete-ansible unable to import ansible.', {
@@ -55,14 +53,6 @@ command and then reload the editor.
 ${interpreter} -m pip install ansible
 \`\`\`
 `,
-                dismissable: true
-              }
-            );
-          } else if (miss_modules_match) {
-            window.atom.notifications.addWarning(
-              `autocomplete-ansible unable to import ${miss_modules_match[1]}.`, {
-                description: `Install ${miss_modules_match[1]} with
-\`${interpreter} -m pip\`.`,
                 dismissable: true
               }
             );
