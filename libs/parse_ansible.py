@@ -5,7 +5,6 @@ from __future__ import print_function, unicode_literals
 import __main__
 import json
 import os
-import sys
 
 from ansible.cli.doc import DocCLI
 from ansible.playbook import Play
@@ -42,8 +41,11 @@ def get_module_list():
         if use_old_loader:
             doc_cli.find_modules(path)
         else:
-            doc_cli.find_plugins(path, 'module')
-    module_list = doc_cli.module_list if use_old_loader else doc_cli.plugin_list
+            founds = doc_cli.find_plugins(path, 'module')
+            if founds:
+                doc_cli.plugin_list.update(founds)
+    module_list = (
+        doc_cli.module_list if use_old_loader else doc_cli.plugin_list)
     return sorted(set(module_list))
 
 
@@ -89,8 +91,8 @@ def main():
         name = os.path.splitext(os.path.basename(lookup))[0]
         result['lookup_plugins'].append(name)
 
-    print(json.dumps(result))
+    return json.dumps(result)
 
 
 if __name__ == '__main__':
-    main()
+    print(main())
