@@ -4,7 +4,6 @@ python:
   - "2.7"
   - "3.5"
   - "3.6"
-  - "3.7"
 env:
   - ANSIBLE=2.4
   - ANSIBLE=2.5
@@ -12,6 +11,10 @@ env:
   - ANSIBLE=2.7
   - ANSIBLE=devel
 matrix:
+  include:
+    - python: 3.7
+      dist: xenial
+      sudo: true
   fast_finish: true
   allow_failures:
     - ANSIBLE=devel
