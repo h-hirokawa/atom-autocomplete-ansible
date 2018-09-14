@@ -15,6 +15,23 @@ matrix:
     - python: 3.7
       dist: xenial
       sudo: true
+      env: ANSIBLE=2.4
+    - python: 3.7
+      dist: xenial
+      sudo: true
+      env: ANSIBLE=2.5
+    - python: 3.7
+      dist: xenial
+      sudo: true
+      env: ANSIBLE=2.6
+    - python: 3.7
+      dist: xenial
+      sudo: true
+      env: ANSIBLE=2.7
+    - python: 3.7
+      dist: xenial
+      sudo: true
+      env: ANSIBLE=devel
   fast_finish: true
   allow_failures:
     - ANSIBLE=devel
