@@ -1,7 +1,7 @@
 {
   "name": "autocomplete-ansible",
   "main": "./libs/main",
-  "version": "0.1.22",
+  "version": "0.1.23",
   "description": "An autocomplete+ provider for Ansible Playbook",
   "keywords": [],
   "repository": "https://github.com/h-hirokawa/atom-autocomplete-ansible",
