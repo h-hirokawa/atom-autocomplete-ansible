@@ -3,10 +3,9 @@ import json
 from libs import parse_ansible
 
 
-def test_parse_ansible(capsys):
-    parse_ansible.main()
-    captured = capsys.readouterr()
-    result = json.loads(captured.out)
+def test_parse_ansible():
+    resjson = parse_ansible.main()
+    result = json.loads(resjson)
     assert result.get('modules')
     assert result.get('directives')
     assert result.get('lookup_plugins')
