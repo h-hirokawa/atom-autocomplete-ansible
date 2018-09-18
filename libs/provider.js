@@ -37,7 +37,7 @@ export default class Provider {
     const interpreter = interpretersLookup.getInterpreter();
     const script = pathJoin(__dirname, 'parse_ansible.py');
     exec(`"${interpreter}" "${script}"`,
-      {env: {ANSIBLE_DEPRECATION_WARNINGS: 'False'}, maxBuffer: 5*1024*1024},
+      {env: {ANSIBLE_DEPRECATION_WARNINGS: 'False'}, maxBuffer: 10*1024*1024},
       function (err, stdout) {
         self._loading = false;
         if (err) {
