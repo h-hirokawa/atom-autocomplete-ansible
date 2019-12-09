@@ -32,7 +32,7 @@ except ImportError:
     USE_FRAGMENT_LOADER = False
 
 __main__.display = Display()
-doc_cli = DocCLI([])
+doc_cli = DocCLI(['ansible atom'])
 
 
 def get_module_list():
