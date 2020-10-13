@@ -6,10 +6,12 @@ python:
   - "3.6"
   - "3.7"
   - "3.8"
+  - "3.9"
 env:
   - ANSIBLE=2.7
   - ANSIBLE=2.8
   - ANSIBLE=2.9
+  - ANSIBLE=2.10
 matrix:
   include:
     - python: 3.8
@@ -24,6 +26,22 @@ matrix:
       dist: xenial
       sudo: true
       env: ANSIBLE=2.9
+    - python: 3.8
+      dist: bionic
+      sudo: true
+      env: ANSIBLE=2.7
+    - python: 3.8
+      dist: bionic
+      sudo: true
+      env: ANSIBLE=2.8
+    - python: 3.8
+      dist: bionic
+      sudo: true
+      env: ANSIBLE=2.9
+    - python: 3.8
+      dist: bionic
+      sudo: true
+      env: ANSIBLE=2.10
   fast_finish: true
 install: pip install tox-travis
 script:
