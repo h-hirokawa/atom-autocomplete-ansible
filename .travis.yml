@@ -15,18 +15,6 @@ env:
 matrix:
   include:
     - python: 3.8
-      dist: xenial
-      sudo: true
-      env: ANSIBLE=2.7
-    - python: 3.8
-      dist: xenial
-      sudo: true
-      env: ANSIBLE=2.8
-    - python: 3.8
-      dist: xenial
-      sudo: true
-      env: ANSIBLE=2.9
-    - python: 3.8
       dist: bionic
       sudo: true
       env: ANSIBLE=2.7
