@@ -41,7 +41,10 @@ def get_module_list():
         if use_old_loader:
             doc_cli.find_modules(path)
         else:
-            founds = doc_cli.find_plugins(path, 'module')
+            try:
+                founds = doc_cli.find_plugins(path, 'module')
+            except TypeError:
+                founds = doc_cli.find_plugins(path, 'plugins', 'module')
             if founds:
                 doc_cli.plugin_list.update(founds)
     module_list = (
