@@ -6,9 +6,9 @@ const fs = require('fs'),
 let self = module.exports = {
   pythonExecutableRe: () => {
     if (/^win/.test(process.platform)) {
-      return /^python(\d+(.\d+)?)?\.exe$/;
+      return /^python(\d+(\.\d+)?)?\.exe$/;
     } else {
-      return /^python(\d+(.\d+)?)?$/;
+      return /^python(\d+(\.\d+)?)?$/;
     }
   },
   possibleGlobalPythonPaths: () => {
