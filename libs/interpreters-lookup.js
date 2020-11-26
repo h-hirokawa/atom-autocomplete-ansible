@@ -6,7 +6,7 @@ const fs = require('fs'),
 let self = module.exports = {
   pythonExecutableRe: () => {
     if (/^win/.test(process.platform)) {
-      return /^python(\d+(\.\d+)?)?\.exe$/;
+      return /^py(thon(\d+(\.\d+)?)?)?\.exe$/;
     } else {
       return /^python(\d+(\.\d+)?)?$/;
     }
@@ -14,6 +14,7 @@ let self = module.exports = {
   possibleGlobalPythonPaths: () => {
     if (/^win/.test(process.platform)) {
       return [
+        'C:\\Windows',
         'C:\\Python2.7',
         'C:\\Python3.4',
         'C:\\Python3.5',
