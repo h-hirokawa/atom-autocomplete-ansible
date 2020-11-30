@@ -6,26 +6,43 @@ const fs = require('fs'),
 let self = module.exports = {
   pythonExecutableRe: () => {
     if (/^win/.test(process.platform)) {
-      return /^python(\d+(.\d+)?)?\.exe$/;
+      return /^py(thon(\d+(\.\d+)?)?)?\.exe$/;
     } else {
-      return /^python(\d+(.\d+)?)?$/;
+      return /^python(\d+(\.\d+)?)?$/;
     }
   },
   possibleGlobalPythonPaths: () => {
     if (/^win/.test(process.platform)) {
       return [
+        'C:\\Windows',
         'C:\\Python2.7',
         'C:\\Python3.4',
         'C:\\Python3.5',
+        'C:\\Python3.6',
+        'C:\\Python3.7',
+        'C:\\Python3.8',
+        'C:\\Python3.9',
         'C:\\Program Files (x86)\\Python 2.7',
         'C:\\Program Files (x86)\\Python 3.4',
         'C:\\Program Files (x86)\\Python 3.5',
+        'C:\\Program Files (x86)\\Python 3.6',
+        'C:\\Program Files (x86)\\Python 3.7',
+        'C:\\Program Files (x86)\\Python 3.8',
+        'C:\\Program Files (x86)\\Python 3.9',
         'C:\\Program Files (x64)\\Python 2.7',
         'C:\\Program Files (x64)\\Python 3.4',
         'C:\\Program Files (x64)\\Python 3.5',
+        'C:\\Program Files (x64)\\Python 3.6',
+        'C:\\Program Files (x64)\\Python 3.7',
+        'C:\\Program Files (x64)\\Python 3.8',
+        'C:\\Program Files (x64)\\Python 3.9',
         'C:\\Program Files\\Python 2.7',
         'C:\\Program Files\\Python 3.4',
         'C:\\Program Files\\Python 3.5',
+        'C:\\Program Files\\Python 3.6',
+        'C:\\Program Files\\Python 3.7',
+        'C:\\Program Files\\Python 3.8',
+        'C:\\Program Files\\Python 3.9',
         `${os.homedir()}\\AppData\\Local\\Programs\\Python\\Python35-32`
       ];
     } else {
