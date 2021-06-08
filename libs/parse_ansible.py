@@ -17,12 +17,17 @@ try:
     from ansible.plugins.loader import lookup_loader, module_loader
     from ansible.utils import plugin_docs
     use_old_loader = False
-    BLACKLIST_MODULES = plugin_docs.BLACKLIST['MODULE']
+    REJECTED_MODULES_LIST = plugin_docs.BLACKLIST['MODULE']
+except AttributeError:  # Added to support 2.11 forward
+    from ansible.plugins.loader import lookup_loader, module_loader
+    from ansible.utils import plugin_docs
+    use_old_loader = False
+    REJECTED_MODULES_LIST = plugin_docs.REJECTLIST['MODULE']
 except ImportError:
     from ansible.plugins import lookup_loader, module_loader
     from ansible.utils import module_docs as plugin_docs
     use_old_loader = True
-    BLACKLIST_MODULES = plugin_docs.BLACKLIST_MODULES
+    REJECTED_MODULES_LIST = plugin_docs.REJECTED_MODULES_LIST
 
 try:
     from ansible.plugins.loader import fragment_loader
@@ -57,7 +62,7 @@ def main():
     result = {'modules': [], 'directives': {}, 'lookup_plugins': []}
 
     for module in get_module_list():
-        if module in BLACKLIST_MODULES:
+        if module in REJECTED_MODULES_LIST:
             continue
         filename = module_loader.find_plugin(module, mod_type='.py')
         if filename is None:
